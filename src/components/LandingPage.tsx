@@ -9,6 +9,7 @@ import { ArrowDownRight, ArrowLeft, ArrowRight, Menu, X } from 'lucide-react'
 import { MagneticButton } from '#/components/MagneticButton'
 import { SequenceScroll } from '#/components/SequenceScroll'
 import { Button } from '#/components/ui/button'
+import { getSequenceFrame } from '#/lib/sequence-assets'
 
 const navigation = [
   { label: 'Cerita kami', href: '#story' },
@@ -34,6 +35,12 @@ const testimonials = [
     role: 'Creative lead, Surabaya',
   },
 ]
+
+const bentoFrames = {
+  hero: getSequenceFrame(144),
+  splash: getSequenceFrame(120),
+  detail: getSequenceFrame(180),
+}
 
 function Navbar() {
   const [open, setOpen] = useState(false)
@@ -207,7 +214,7 @@ function Bento() {
       <article className="group relative min-h-[560px] overflow-hidden bg-[#082f3a] text-white md:col-span-6 md:row-span-6">
         <img
           data-bento-image
-          src="/sequences/ezgif-frame-064.jpg"
+          src={bentoFrames.hero}
           alt="Le Minerale bottle suspended in water"
           className="absolute inset-0 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
@@ -221,7 +228,7 @@ function Bento() {
       <article className="group relative min-h-[320px] overflow-hidden bg-[#c7dde0] md:col-span-6 md:row-span-3">
         <img
           data-bento-image
-          src="/sequences/ezgif-frame-120.jpg"
+          src={bentoFrames.splash}
           alt="Water droplets surrounding Le Minerale"
           className="absolute inset-0 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
@@ -240,7 +247,7 @@ function Bento() {
           </p>
           <div className="size-16 shrink-0 overflow-hidden rounded-full md:size-20">
             <img
-              src="/sequences/ezgif-frame-180.jpg"
+              src={bentoFrames.detail}
               alt="Le Minerale detail"
               className="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
             />

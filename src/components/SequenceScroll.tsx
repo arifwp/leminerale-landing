@@ -9,16 +9,9 @@ import {
 } from 'motion/react'
 
 import { MagneticButton } from '#/components/MagneticButton'
+import { getSequenceFrame, SEQUENCE_FRAME_COUNT } from '#/lib/sequence-assets'
 
-const FRAME_COUNT = 192
 const TIMELINE_STEPS = 240
-const frameModules = import.meta.glob<string>(
-  '/assets/sequences/ezgif-frame-*.jpg',
-  { eager: true, import: 'default', query: '?url' },
-)
-const FRAME_URLS = Object.entries(frameModules)
-  .sort(([left], [right]) => left.localeCompare(right))
-  .map(([, url]) => url)
 
 type StoryProgress = ReturnType<typeof useSpring>
 
@@ -94,15 +87,15 @@ export function SequenceScroll() {
   useEffect(() => {
     let cancelled = false
     let completed = 0
-    const images = Array.from({ length: FRAME_COUNT }, (_, index) => {
+    const images = Array.from({ length: SEQUENCE_FRAME_COUNT }, (_, index) => {
       const image = new Image()
       image.decoding = 'async'
-      image.src = FRAME_URLS[index]
+      image.src = getSequenceFrame(index + 1)
       const done = () => {
         if (cancelled) return
         completed += 1
-        setLoadProgress(Math.round((completed / FRAME_COUNT) * 100))
-        if (completed === FRAME_COUNT) setIsReady(true)
+        setLoadProgress(Math.round((completed / SEQUENCE_FRAME_COUNT) * 100))
+        if (completed === SEQUENCE_FRAME_COUNT) setIsReady(true)
       }
       image.onload = done
       image.onerror = done
@@ -145,7 +138,7 @@ export function SequenceScroll() {
   useMotionValueEvent(smoothProgress, 'change', (latest) => {
     const timelineFrame = Math.round(latest * (TIMELINE_STEPS - 1))
     const nextFrame = Math.round(
-      (timelineFrame / (TIMELINE_STEPS - 1)) * (FRAME_COUNT - 1),
+      (timelineFrame / (TIMELINE_STEPS - 1)) * (SEQUENCE_FRAME_COUNT - 1),
     )
     if (nextFrame === frameRef.current) return
     frameRef.current = nextFrame
