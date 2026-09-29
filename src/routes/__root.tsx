@@ -1,6 +1,4 @@
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { TanStackDevtools } from '@tanstack/react-devtools'
 
 import { getLocale } from '#/paraglide/runtime'
 
@@ -25,7 +23,12 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'TanStack Start Starter',
+        title: 'Le Minerale — Ada Manis-manisnya',
+      },
+      {
+        name: 'description',
+        content:
+          'Le Minerale, air mineral pegunungan dengan mineral esensial yang terasa segar dan alami.',
       },
     ],
     links: [
@@ -40,23 +43,12 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang={getLocale()}>
+    <html lang={getLocale()} suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
       <body>
         {children}
-        <TanStackDevtools
-          config={{
-            position: 'bottom-right',
-          }}
-          plugins={[
-            {
-              name: 'Tanstack Router',
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        />
         <Scripts />
       </body>
     </html>
